@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My Resume</title>
+    <style>
+      :root {
+        --neutral-800: #262626;
+        --neutral-700: #404040;
+        --neutral-500: #737373;
+        --neutral-300: #d4d4d4;
+        --neutral-200: #e5e5e5;
+        --neutral-100: #f5f5f5;
+      }
+      .text-neutral-800 { color: var(--neutral-800); }
+      .text-neutral-500 { color: var(--neutral-500); }
+      .text-neutral-300 { color: var(--neutral-300); }
+
+      .bg-neutral-300 { background-color: var(--neutral-300); }
+
+      * {
+        color: var(--neutral-700);
+        font-family: monospace;
+      }
+      @media print {
+        body {
+          -webkit-print-color-adjust: exact;
+        }
+      }
+      .text-4xl {
+        font-size: 2.25rem; /* 36px */
+        line-height: 2.5rem; /* 40px */
+      }
+      .text-2xl {
+        font-size: 1.5rem; /* 24px */
+        line-height: 2rem; /* 32px */
+      }
+
+      /* Flex */
+      .flex {
+        display: flex;
+      }
+      .flex-col {
+        display: flex;
+        flex-direction: column;
+      }
+      .flex-row {
+        display: flex;
+        flex-direction: row;
+      }
+      .flex-between {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        flex-direction: row;
+      }
+      /* Gap */
+      .gap-4	{ gap: 1rem; /* 16px */ }
+      .gap-8	{ gap: 2rem; /* 32px */ }
+      .gap-x-4 {	column-gap: 1rem; }
+      .gap-x-8 {	column-gap: 2rem; }
+      .gap-y-2 {	row-gap: 0.5rem; /* 16px */}
+      .gap-y-4 {	row-gap: 1rem; /* 16px */}
+      .gap-y-12 {	row-gap: 3rem; /* 48px */}
+      .gap-y-10 {	row-gap: 2.5rem; /* 40px */}
+
+
+      /* Align */
+      .items-center	{
+        align-items: center;
+      }
+
+      /* Spacing */
+      .mt-4 {
+        margin-top: 1rem;
+      }
+      .mb-1 {
+        margin-top: 0.25rem;
+      }
+
+      /* Grid */
+      .grid {
+        display: grid;
+      }
+      .auto-cols-auto	{
+        grid-auto-columns: auto;
+      }
+      .grid-cols-2	{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .section-items {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.5rem;
+        padding: 1rem 0 1rem 0;
+      }
+      .section_title {
+        display: block;
+        font-size: 1.5rem; /* 24px */
+        line-height: 2rem; /* 32px */
+        letter-spacing: 0.116rem;
+      }
+      .section_title_wrapper {
+        font-size: 3rem;
+        width: 100%;
+        text-align: left;
+        border-bottom: 1px dashed #d6d3d1;
+      }
+      .experience_title {
+        font-size: 1.2rem;
+        font-weight:500;
+      }
+      .experience_company {
+        color: var(--neutral-500);
+      }
+      .dates {
+        color: var(--neutral-500);
+      }
+
+
+      .experience_tags {
+        display: flex;
+        column-gap: 1rem;
+      }
+      .experience_tags .tag {
+        padding: 0.25rem;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        color: var(--neutral-500);
+        background-color: var(--neutral-200);
+      }
+
+      svg {
+        display: block;
+        margin: auto;
+        height: 100%;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="flex-col gap-y-10">
+        <div class="profile flex-between">
+          <div class="flex-col">
+            <span class="text-4xl">{{resume.profile.name}}</span>
+            <span class="text-2xl text-neutral-500">{{resume.profile.title}}</span>
+          </div>
+          <div class="flex-col">
+            <div class="flex-row items-center gap-x-4 mb-1">
+              <div class="link-icon">
+                {{ICONS.mail|safe}}
+              </div>
+              <div><a href="mailto:{{resume.profile.email}}">{{resume.profile.email}}</a></div>
+            </div>
+            {% for link in resume.profile.links %}
+            <div class="flex-row items-center gap-x-4 mb-1">
+              <div class="link-icon">
+                {{ICONS.web|safe}}
+              </div>
+              <div><a href="{{link}}">{{link}}</a></div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="section">
+          <div class="section_title_wrapper">
+            <span class="section_title">SUMMARY</h1>
+          </div>
+          <p>{{resume.summary|safe}}</p>
+        </div>
+        <div class="section">
+          <div class="section_title_wrapper">
+            <span class="section_title">EXPERIENCE</h1>
+          </div>
+          <div class="section-items">
+            {% for e in resume.experiences %}
+            <div class="section-item">
+              <div class="experience_title_wrapper flex-between">
+                <div class="experience_title">{{e.title}}</div>
+                <div class="dates">
+                  {{e.start_date}}-{{e.end_date}}
+                </div>
+              </div>
+              <div class="experience_company">
+                {{e.company}}
+              </div>
+              <div class="experience_summary">
+                {{e.summary|safe}}
+              </div>
+              <div class="skills flex-col gap-y-2">
+                <div>Skills:</div>
+                <div class="experience_tags">
+                  {% for tag in e.tags %}
+                    <div class="tag">{{tag}}</div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="section">
+          <div class="section_title_wrapper">
+            <span class="section_title">EDUCATION</h1>
+          </div>
+          <div class="section-items">
+            {% for e in resume.education %}
+              <div>
+                <div class="flex-between">
+                  <div>{{e.field}}</div>
+                  <div class="dates">{{e.start_date}} - {{e.end_date}}</div>
+                </div>
+                <div class="text-neutral-500">{{e.school}} - {{e.degree}}</div>
+                <div><a href="{{e.website}}">{{e.website}}</a></div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="section">
+          <div class="section_title_wrapper">
+            <span class="section_title">SKILLS</h1>
+          </div>
+          <div class="section-items">
+            <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+              {% for s in resume.skills %}
+                <div class="flex-between">
+                  <div>{{s.name}}</div>
+                  <div class="text-neutral-500">{{s.level}}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section_title_wrapper">
+            <span class="section_title">LANGUAGES</h1>
+          </div>
+          <div class="section-items">
+            <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+              {% for l in resume.languages %}
+                <div class="flex-between">
+                  <div>{{l.name}}</div>
+                  <div class="text-neutral-500">{{l.level}}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section_title_wrapper">
+            <span class="section_title">PROJECTS</h1>
+          </div>
+          <div class="section-items flex-col gap-x-8">
+            {% for p in resume.projects %}
+              <div class="flex-col">
+                <div>{{p.name}}</div>
+                <div><a href="{{p.url}}">{{p.url}}</a></div>
+                <div>{{p.description|safe}}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% for s in resume.custom_sections %}
+          <div class="section">
+            <div class="section_title_wrapper">
+              <span class="section_title">{{s.name}}</h1>
+            </div>
+            <div>{{s.summary|safe}}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
