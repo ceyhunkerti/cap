@@ -12,6 +12,7 @@ where
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Resume {
+    pub default: Option<bool>,
     pub profile: Profile,
     #[serde(deserialize_with = "md_deserializer")]
     pub summary: String,

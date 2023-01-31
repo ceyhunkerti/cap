@@ -21,7 +21,13 @@ fn main() {
         Args { config, command } => match command {
             Some(Commands::Resume(resume)) => match &resume.sub {
                 ResumeSub::List => {
-                    console::print(vec![Config::new(config.to_owned()).resume_list()]);
+                    console::print(
+                        Config::new(config.to_owned())
+                            .resume_list()
+                            .iter()
+                            .map(|(d, r)| vec![if *d { "*" } else { "" }, r])
+                            .collect(),
+                    );
                 }
                 ResumeSub::Gen(GenSub { name, out }) => {
                     let mut config = Config::new(config.to_owned());

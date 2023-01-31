@@ -20,8 +20,16 @@ impl Config {
         let config: Result<Config, serde_yaml::Error> = serde_yaml::from_reader(f);
         config.expect("Unable to read config file")
     }
-    pub fn resume_list(&self) -> Vec<String> {
-        self.resumes.keys().cloned().collect::<Vec<String>>()
+    pub fn resume_list(&self) -> Vec<(bool, &String)> {
+        self.resumes
+            .iter()
+            .map(|(k, v)| {
+                (
+                    self.resumes.keys().len() == 1 || v.default.unwrap_or(false),
+                    k,
+                )
+            })
+            .collect::<Vec<(bool, &String)>>()
     }
     pub fn resume(&mut self, name: &str) -> Option<&mut Resume> {
         self.resumes.get_mut(name)

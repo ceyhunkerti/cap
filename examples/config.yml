@@ -1,3 +1,13 @@
+common_skill: &common_skills
+  - name: python
+    level: Advanced
+  - name: sql
+    level: Advanced
+  - name: javascript
+    level: Advanced
+  - name: golang
+    level: Expert
+
 resumes:
   my_resume_1:
     default: true
@@ -6,6 +16,92 @@ resumes:
       email: "william.bonney@bluecolor.io"
       phone: "+902888945017"
       title: Data Engineer
+      links:
+        - "https://github.com/ceyhunkerti"
+        - "https://github.com/bluecolor"
+        - "https://en.wikipedia.org/wiki/Billy_the_Kid"
+    summary: |
+      Lorem ipsum dolor sit amet. Ut sapiente deleniti et nemo dolor sit nihil
+      dolor aut repellendus repellat ad voluptas blanditiis nam nihil facilis et minus tempore?
+      Qui rerum quis nam voluptas iure 33 iusto atque in ratione laudantium quo expedita animi et veniam nulla.
+      - Ex provident maiores et minus soluta non voluptas temporibus.
+      - Aut exercitationem architecto ea veritatis voluptates ea corrupti nesciunt ad nulla blanditiis.
+      - Est saepe possimus vel deserunt consequatur.
+    experiences:
+      - company: ACME
+        start_date: "2006"
+        end_date: "2010"
+        title: "Data Engineer"
+        tags: [python, scala, sql]
+        summary: |
+          - You can enter markdown items
+          - I've this thing
+          - I've done another thing
+          - Also I've done this thing
+      - company: Chocolate Factory
+        start_date: "2010"
+        end_date: "2012"
+        title: "Full Stack Engineer"
+        tags:
+          [python, scala, sql, c++, pandas, ruby, elixir, rust, bigquery, mysql]
+        summary: |
+          Some text about the job summary.
+          - I've done something
+          - I've done another thing
+          - Also I've done this thing
+      - company: Coffee Factory
+        start_date: "2010"
+        end_date: "2016"
+        title: "Full Stack Engineer"
+        tags: [rails, nodejs, crytal, zig, javascript]
+        summary: |
+          Some text about the job summary.
+          - I've done something
+          - I've done another thing
+          - Also I've done this thing
+      - company: Freelancer
+        start_date: "2016"
+        title: "Full Stack Engineer"
+        tags: [python, nim, rust, golang, perl, javascript, R, julia]
+        summary: |
+          Some text about the job summary.
+          - I've done something
+          - I've done another thing
+          - Also I've done this thing
+    education:
+      - degree: Bachelors
+        school: Yeditepe University, Istanbul
+        field: Computer Science Engineering
+        start_date: 2001
+        end_date: 2006
+        website: https://yeditepe.edu.tr/en
+    skills: *common_skills
+    languages:
+      - name: English
+        level: Fluent
+    projects:
+      - name: cap
+        description: command line resume builder
+        url: https://github.com/ceyhunkerti/cap
+    custom_sections:
+      - name: MY CUSTOM SECTION
+        summary: |
+          you can put some markdown here
+          - I've done something
+          - I've done another thing
+          - Also I've done this thing
+      - name: ANOTHER CUSTOM SECTION
+        summary: |
+          you can put some markdown here
+          - I've done something
+          - I've done another thing
+          - Also I've done this thing
+  my_resume_2:
+    profile:
+      name: William Antrim
+      email: "william.antrim@bluecolor.io"
+      phone: "+902888945017"
+      title: Full Stack Engineer
       links:
         - "https://github.com/ceyhunkerti"
         - "https://github.com/bluecolor"
