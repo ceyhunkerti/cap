@@ -7,7 +7,7 @@ mod config;
 mod console;
 
 use clap::Parser;
-use cli::{GenSub, ResumeSub, TemplateSub};
+use cli::{ResumeGenSub, ResumeSub, TemplateSub};
 
 use crate::cli::{Args, Commands};
 use crate::config::Config;
@@ -28,10 +28,22 @@ fn main() {
                             .collect(),
                     );
                 }
-                ResumeSub::Gen(GenSub { name, out }) => {
+                ResumeSub::Gen(ResumeGenSub {
+                    name,
+                    out,
+                    template,
+                }) => {
                     let config = Config::new(config.to_owned());
                     let resume = config.resume(name).expect("resume `{name}` not found");
-                    to_pdf(&resume, out, &config.template).expect("failed to create pdf");
+                    to_pdf(
+                        &resume,
+                        out,
+                        template
+                            .to_owned()
+                            .unwrap_or(config.template.to_owned())
+                            .as_str(),
+                    )
+                    .expect("failed to create pdf");
                 }
             },
             Some(Commands::Template(template)) => match &template.sub {

@@ -7,7 +7,6 @@ pub struct Args {
     // Config file
     #[arg(short, long, global = true)]
     pub config: Option<String>,
-
     // resume command
     #[command(subcommand)]
     pub command: Option<Commands>,
@@ -34,14 +33,15 @@ pub struct Template {
 #[derive(Subcommand, Debug)]
 pub enum ResumeSub {
     List,
-    Gen(GenSub),
+    Gen(ResumeGenSub),
 }
 
 #[derive(Debug, Parser)]
-pub struct GenSub {
+pub struct ResumeGenSub {
     #[arg(short, long)]
     pub name: String,
-
+    #[arg(short, long)]
+    pub template: Option<String>,
     #[arg(short, long, global = true)]
     pub out: Option<String>,
 }

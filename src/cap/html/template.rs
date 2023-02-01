@@ -3,6 +3,7 @@ use headless_chrome::types::PrintToPdfOptions;
 use headless_chrome::{Browser, LaunchOptionsBuilder};
 use rust_embed::RustEmbed;
 use std::io::{ErrorKind, Write};
+use std::path::Path;
 use std::{fs, io};
 use tempfile::NamedTempFile;
 use tera::{Context, Tera};
@@ -27,12 +28,21 @@ pub fn templates() -> Vec<String> {
         .collect()
 }
 
+fn read(template: &str) -> String {
+    // check if it's a file path in local file system
+    if Path::new(format!("{template}").as_str()).is_file() {
+        let content = fs::read_to_string(template).expect("Unable to read template");
+        content
+    } else {
+        // read from the embedded template
+        let f = Template::get(format!("{template}.html").as_str()).unwrap();
+        std::str::from_utf8(f.data.as_ref()).unwrap().to_owned()
+    }
+}
+
 fn to_html(context: &Context, template: &str) -> String {
     let mut tera = Tera::default();
-    let f = Template::get(format!("{template}.html").as_str()).unwrap();
-    let template_content = std::str::from_utf8(f.data.as_ref()).unwrap();
-
-    tera.add_raw_template(template, template_content).unwrap();
+    tera.add_raw_template(template, &read(template)).unwrap();
     let html = tera.render(template, context).unwrap();
 
     let mut file = NamedTempFile::new().unwrap();
@@ -63,7 +73,6 @@ pub fn to_pdf(resume: &Resume, out: &Option<String>, template: &str) -> Result<(
         .expect("Default should not panic");
 
     let browser = Browser::new(options).expect("failed to initiate browser");
-
     let tab = browser
         .wait_for_initial_tab()
         .expect("failed to initiate browser tab");
