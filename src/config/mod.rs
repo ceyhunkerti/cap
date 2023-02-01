@@ -6,7 +6,8 @@ use std::{collections::HashMap, env};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Config {
-    resumes: HashMap<String, Resume>,
+    pub template: String,
+    pub resumes: HashMap<String, Resume>,
 }
 
 impl Config {
@@ -20,7 +21,7 @@ impl Config {
         let config: Result<Config, serde_yaml::Error> = serde_yaml::from_reader(f);
         config.expect("Unable to read config file")
     }
-    pub fn resume_list(&self) -> Vec<(bool, &String)> {
+    pub fn resumes(&self) -> Vec<(bool, &String)> {
         self.resumes
             .iter()
             .map(|(k, v)| {
@@ -31,7 +32,7 @@ impl Config {
             })
             .collect::<Vec<(bool, &String)>>()
     }
-    pub fn resume(&mut self, name: &str) -> Option<&mut Resume> {
-        self.resumes.get_mut(name)
+    pub fn resume(&self, name: &str) -> Option<&Resume> {
+        self.resumes.get(name)
     }
 }

@@ -16,12 +16,19 @@ pub struct Args {
 #[derive(Subcommand, Debug)]
 pub enum Commands {
     Resume(Resume),
+    Template(Template),
 }
 
 #[derive(Debug, Parser)]
 pub struct Resume {
     #[command(subcommand)]
     pub sub: ResumeSub,
+}
+
+#[derive(Debug, Parser)]
+pub struct Template {
+    #[command(subcommand)]
+    pub sub: TemplateSub,
 }
 
 #[derive(Subcommand, Debug)]
@@ -37,4 +44,9 @@ pub struct GenSub {
 
     #[arg(short, long, global = true)]
     pub out: Option<String>,
+}
+
+#[derive(Subcommand, Debug)]
+pub enum TemplateSub {
+    List,
 }
