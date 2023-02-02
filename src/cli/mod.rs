@@ -16,6 +16,7 @@ pub struct Args {
 pub enum Commands {
     Resume(Resume),
     Template(Template),
+    Init(Init),
 }
 
 #[derive(Debug, Parser)]
@@ -49,4 +50,10 @@ pub struct ResumeGenSub {
 #[derive(Subcommand, Debug)]
 pub enum TemplateSub {
     List,
+}
+
+#[derive(Debug, Parser)]
+pub struct Init {
+    #[arg(short, long)]
+    pub path: Option<String>,
 }

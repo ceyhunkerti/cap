@@ -11,13 +11,15 @@ use cli::{ResumeGenSub, ResumeSub, TemplateSub};
 
 use crate::cli::{Args, Commands};
 use crate::config::Config;
-use cap::html::template::{templates, to_pdf};
+use cap::assets::templates;
+use cap::html::template::to_pdf;
 
 fn main() {
     let args = Args::parse();
 
     match &args {
         Args { config, command } => match command {
+            Some(Commands::Init(init)) => cap::init(init.path.to_owned()),
             Some(Commands::Resume(resume)) => match &resume.sub {
                 ResumeSub::List => {
                     console::print(

@@ -1,32 +1,14 @@
 use anyhow::{Error, Result};
 use headless_chrome::types::PrintToPdfOptions;
 use headless_chrome::{Browser, LaunchOptionsBuilder};
-use rust_embed::RustEmbed;
 use std::io::{ErrorKind, Write};
 use std::path::Path;
 use std::{fs, io};
 use tempfile::NamedTempFile;
 use tera::{Context, Tera};
 
+use crate::cap::assets::Assets;
 use crate::config::resume::Resume;
-
-#[derive(RustEmbed)]
-#[folder = "src/templates/"]
-#[include = "*.html"]
-struct Template;
-
-pub fn templates() -> Vec<String> {
-    Template::iter()
-        .map(|f| {
-            f.as_ref()
-                .to_string()
-                .split(".")
-                .next()
-                .unwrap_or("")
-                .to_owned()
-        })
-        .collect()
-}
 
 fn read(template: &str) -> String {
     // check if it's a file path in local file system
@@ -35,7 +17,7 @@ fn read(template: &str) -> String {
         content
     } else {
         // read from the embedded template
-        let f = Template::get(format!("{template}.html").as_str()).unwrap();
+        let f = Assets::get(format!("templates/{template}.html").as_str()).unwrap();
         std::str::from_utf8(f.data.as_ref()).unwrap().to_owned()
     }
 }
