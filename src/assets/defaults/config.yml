@@ -1,3 +1,6 @@
+# An example config file. Modify this to define your resume(s).
+
+# You can use yaml features like shared variables
 common_skills: &common_skills
   - name: python
     level: Advanced
@@ -9,8 +12,13 @@ common_skills: &common_skills
     level: Expert
 
 # default template
+# see list of templates with `cap template list` command
+# or you can enter the path for your custom template. eg. "~/documents/my_resume.html"
+# you can also override this parameter with the `template` parameter.
+# eg `cap resume gen --template "my_template.html"`
 template: "basic"
 
+# you can define multiple resumes and one default;
 resumes:
   my_resume_1:
     default: true
@@ -19,10 +27,12 @@ resumes:
       email: "william.bonney@bluecolor.io"
       phone: "+902888945017"
       title: Data Engineer
+      # you can add as many links as you want
       links:
         - "https://github.com/ceyhunkerti"
         - "https://github.com/bluecolor"
         - "https://en.wikipedia.org/wiki/Billy_the_Kid"
+    # this field accepts markdown syntax
     summary: |
       Lorem ipsum dolor sit amet. Ut sapiente deleniti et nemo dolor sit nihil
       dolor aut repellendus repellat ad voluptas blanditiis nam nihil facilis et minus tempore?
@@ -33,9 +43,12 @@ resumes:
     experiences:
       - company: ACME
         start_date: "2006"
+        # you can skip `end_date` if you still work in this project/job.
         end_date: "2010"
         title: "Data Engineer"
+        # chips/skills you wan't to highlight in this experience
         tags: [python, scala, sql]
+        # this field accepts markdown syntax
         summary: |
           - You can enter markdown items
           - I've this thing
@@ -72,12 +85,14 @@ resumes:
           - I've done another thing
           - Also I've done this thing
     education:
+      # You can enter as many items you want here.
       - degree: Bachelors
         school: Yeditepe University, Istanbul
         field: Computer Science Engineering
-        start_date: 2001
-        end_date: 2006
+        start_date: "2001"
+        end_date: "2006"
         website: https://yeditepe.edu.tr/en
+    # * using shared yaml variables
     skills: *common_skills
     languages:
       - name: English
@@ -86,8 +101,11 @@ resumes:
       - name: cap
         description: command line resume builder
         url: https://github.com/ceyhunkerti/cap
+    # optional custom sections
+    # items can have two attributes; `name` and `summary`
     custom_sections:
       - name: MY CUSTOM SECTION
+        # this field accepts markdown syntax
         summary: |
           you can put some markdown here
           - I've done something
@@ -99,6 +117,7 @@ resumes:
           - I've done something
           - I've done another thing
           - Also I've done this thing
+  # secondary resume
   my_resume_2:
     profile:
       name: William Antrim
@@ -193,3 +212,10 @@ resumes:
           - I've done something
           - I've done another thing
           - Also I've done this thing
+  # you can add as many resumes as you want
+  # - another_resume:
+  # ....
+  # - also_this_resume:
+  # ....
+  # - my_resume:
+  # ...

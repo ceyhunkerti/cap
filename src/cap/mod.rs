@@ -9,11 +9,16 @@ pub mod html;
 
 pub fn init(path: Option<String>) {
     let p = path.unwrap_or("cap.yml".to_string());
-    let md = metadata(&p).unwrap();
-    let config_file = if md.is_dir() {
-        Path::new(&p).with_file_name("cap.yaml")
-    } else {
-        Path::new(&p).to_path_buf()
+
+    let config_file = match metadata(&p) {
+        Ok(md) => {
+            if md.is_dir() {
+                Path::new(&p).with_file_name("cap.yaml")
+            } else {
+                Path::new(&p).to_path_buf()
+            }
+        }
+        _ => Path::new(&p).to_path_buf(),
     };
     let f = Assets::get(format!("defaults/config.yml").as_str()).unwrap();
     let content = std::str::from_utf8(f.data.as_ref()).unwrap().to_owned();
