@@ -10,6 +10,9 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 ## [Unreleased]
 
+## [0.1.8] - 2023-02-04
+new windows release target
+
 ## [0.1.7] - 2023-02-04
 new release targets
 
