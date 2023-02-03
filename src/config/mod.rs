@@ -1,5 +1,6 @@
 pub mod resume;
 
+use anyhow::Result;
 use resume::Resume;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, env};
@@ -11,18 +12,28 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(config_file: Option<String>) -> Self {
-        let default = String::from("~/.config/config.yml");
+    pub fn new(config_file: Option<String>) -> Result<Config, anyhow::Error> {
+        let default = String::from("config.yml");
         let resolved_config_file = match config_file {
             Some(f) => f,
-            None => env::var("CAP_HOME").unwrap_or(default),
+            None => {
+                info!("config file not given checking `CAP_HOME` environment variable...");
+                match env::var("CAP_HOME") {
+                    Ok(c) => c,
+                    _ => {
+                        warn!("no config file found using default ./{}", default);
+                        default
+                    }
+                }
+            }
         };
-        let f = std::fs::File::open(resolved_config_file).expect("Could not open file.");
-        let config: Result<Config, serde_yaml::Error> = serde_yaml::from_reader(f);
-        config.expect("Unable to read config file")
+        let f = std::fs::File::open(resolved_config_file)?;
+        let config = serde_yaml::from_reader(f)?;
+        Ok(config)
     }
     pub fn resumes(&self) -> Vec<(bool, &String)> {
-        self.resumes
+        let mut result = self
+            .resumes
             .iter()
             .map(|(k, v)| {
                 (
@@ -30,7 +41,9 @@ impl Config {
                     k,
                 )
             })
-            .collect::<Vec<(bool, &String)>>()
+            .collect::<Vec<(bool, &String)>>();
+        result.sort_by_key(|k| k.1);
+        result
     }
     pub fn resume(&self, name: &str) -> Option<&Resume> {
         self.resumes.get(name)

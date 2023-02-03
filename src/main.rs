@@ -14,7 +14,12 @@ use crate::config::Config;
 use cap::assets::templates;
 use cap::html::template::to_pdf;
 
-fn main() {
+#[macro_use]
+extern crate log;
+
+fn main() -> Result<(), anyhow::Error> {
+    env_logger::init();
+
     let args = Args::parse();
 
     match &args {
@@ -23,7 +28,7 @@ fn main() {
             Some(Commands::Resume(resume)) => match &resume.sub {
                 ResumeSub::List => {
                     console::print(
-                        Config::new(config.to_owned())
+                        Config::new(config.to_owned())?
                             .resumes()
                             .iter()
                             .map(|(d, r)| vec![if *d { "*" } else { "" }, r])
@@ -35,7 +40,7 @@ fn main() {
                     out,
                     template,
                 }) => {
-                    let config = Config::new(config.to_owned());
+                    let config = Config::new(config.to_owned()).unwrap();
                     let resume = config.resume(name).expect("resume `{name}` not found");
                     to_pdf(
                         &resume,
@@ -56,4 +61,5 @@ fn main() {
             _ => {}
         },
     }
+    Ok(())
 }
