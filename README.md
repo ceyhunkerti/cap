@@ -51,6 +51,8 @@ tar -xvf cap-x86_64-unknown-linux-gnu.tar.gz
 # checkout your resume `my_resume_2023.pdf` with a pdf viewer
 ```
 
+See [examples](./examples/) for example config file and the output pdf file.
+
 ## Creating Your Custom Resume Template
 
 You can create your `html` resume template and use that template to generate your resume.
