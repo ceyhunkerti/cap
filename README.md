@@ -57,11 +57,15 @@ You can create your `html` resume template and use that template to generate you
 
 - We use [jinja style template engine](https://tera.netlify.app/) to generate html files
 - **summary** and **description** fields are markdown enabled so remember put them with `safe` tag in your template like `{{description|safe}}` or `{{summary|safe}}`.
+- See an example template in [here](./src/assets/templates/basic.html)
 - You can generate your resume with your custom html template with;
 ```sh
-./cap resume gen --config cap.yml --name my_resume_1 --out my_resume_2023.pdf --template `path/to/my_template.html`
+./cap resume gen \
+    --config cap.yml \
+    --name my_resume_1 \
+    --out my_resume_2023.pdf \
+    --template `path/to/my_template.html`
 ```
-
 
 ## Contribution
 
