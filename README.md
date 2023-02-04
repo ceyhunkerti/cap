@@ -34,7 +34,7 @@ tar -xvf cap-x86_64-unknown-linux-gnu.tar.gz
 # open your config file (cap.yml) with your editor and update your resume(s)
 # vim cap.yml
 
-# list available resumes in your template
+# list available resumes in your config
 ./cap resume list --config cap.yml
 
 # generate a resume
