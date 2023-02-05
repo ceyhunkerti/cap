@@ -23,5 +23,4 @@ new windows release target
 new release targets
 
 ## [0.1.6] - 2023-02-04
-
 Initial release

@@ -50,14 +50,10 @@ pub fn to_pdf(resume: &Resume, out: &Option<String>, template: &str) -> Result<(
     context.insert("ICONS", &super::elements::ICONS);
 
     let html_path = to_html(&context, template);
-    let options = LaunchOptionsBuilder::default()
-        .build()
-        .expect("Default should not panic");
+    let options = LaunchOptionsBuilder::default().build()?;
 
-    let browser = Browser::new(options).expect("failed to initiate browser");
-    let tab = browser
-        .wait_for_initial_tab()
-        .expect("failed to initiate browser tab");
+    let browser = Browser::new(options)?;
+    let tab = browser.wait_for_initial_tab()?;
 
     let path = format!("file://{html_path}");
 
