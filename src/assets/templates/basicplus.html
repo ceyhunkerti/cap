@@ -135,22 +135,46 @@
         margin: auto;
         height: 100%;
       }
+      body {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      .main {
+        width: 100%;
+        display: flex;
+        padding: 0;
+        column-gap: 20px;
+      }
+      .aside-left {
+        flex-grow: 1;
+        width: 100%;
+        padding-left: 0;
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+      }
+      .main-content {
+        flex-grow: 2;
+      }
+      .elipsis {
+        max-width: 180px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: inline-block;
+      }
     </style>
   </head>
   <body>
     <div class="main">
-      <div class="flex-col gap-y-10">
-        <div class="profile flex-between">
-          <div class="flex-col">
-            <span class="text-4xl">{{resume.profile.name}}</span>
-            <span class="text-2xl text-neutral-500">{{resume.profile.title}}</span>
-          </div>
-          <div class="flex-col">
+      <div class="aside-left">
+        <div class="flex-col">
             <div class="flex-row items-center gap-x-4 mb-1">
               <div class="link-icon">
                 {{ICONS.mail|safe}}
               </div>
-              <div><a href="mailto:{{resume.profile.email}}">{{resume.profile.email}}</a></div>
+              <div><a class="elipsis" href="mailto:{{resume.profile.email}}">{{resume.profile.email}}</a></div>
             </div>
             {% for link in resume.profile.links %}
             <div class="flex-row items-center gap-x-4 mb-1">
@@ -161,10 +185,48 @@
                   {{ICONS.web|safe}}
                 {% endif %}
               </div>
-              <div><a href="{{link}}">{{link}}</a></div>
+              <div><a class="elipsis" href="{{link}}">{{link}}</a></div>
             </div>
             {% endfor %}
+        </div>
+        <div class="section">
+            <div class="section_title_wrapper">
+              <span class="section_title">SKILLS</h1>
+            </div>
+            <div class="section-items">
+              <div style="display:flex;flex-direction:column;row-gap:4px;">
+                {% for s in resume.skills %}
+                  <div class="flex-between">
+                    <div>{{s.name}}</div>
+                    <div class="text-neutral-500">{{s.level}}</div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
           </div>
+          <div class="section">
+            <div class="section_title_wrapper">
+              <span class="section_title">LANGUAGES</h1>
+            </div>
+            <div class="section-items">
+              <div class="display:flex;flex-direction:column;row-gap:4px;">
+                {% for l in resume.languages %}
+                  <div class="flex-between">
+                    <div>{{l.name}}</div>
+                    <div class="text-neutral-500">{{l.level}}</div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="main-content flex-col gap-y-10">
+        <div class="profile flex-between">
+          <div class="flex-col">
+            <span class="text-4xl">{{resume.profile.name}}</span>
+            <span class="text-2xl text-neutral-500">{{resume.profile.title}}</span>
+          </div>
+
         </div>
         <div class="section">
           <div class="section_title_wrapper">
@@ -218,36 +280,6 @@
                 <div><a href="{{e.website}}">{{e.website}}</a></div>
               </div>
             {% endfor %}
-          </div>
-        </div>
-        <div class="section">
-          <div class="section_title_wrapper">
-            <span class="section_title">SKILLS</h1>
-          </div>
-          <div class="section-items">
-            <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-              {% for s in resume.skills %}
-                <div class="flex-between">
-                  <div>{{s.name}}</div>
-                  <div class="text-neutral-500">{{s.level}}</div>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-        <div class="section">
-          <div class="section_title_wrapper">
-            <span class="section_title">LANGUAGES</h1>
-          </div>
-          <div class="section-items">
-            <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-              {% for l in resume.languages %}
-                <div class="flex-between">
-                  <div>{{l.name}}</div>
-                  <div class="text-neutral-500">{{l.level}}</div>
-                </div>
-              {% endfor %}
-            </div>
           </div>
         </div>
         <div class="section">
