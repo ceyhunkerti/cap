@@ -43,11 +43,12 @@ tar -xvf cap-x86_64-unknown-linux-gnu.tar.gz
     --name my_resume_1 \
     --out my_resume_2023.pdf
 # or
-./cap resume gen \
-    --config cap.yml \
-    --name my_resume_1 \
-    --template basic \
-    --out my_resume_2023.pdf
+# ./cap resume gen \
+#     --config cap.yml \
+#     --name my_resume_1 \
+#     --template basicplus \
+#     --out my_resume_2023.pdf
+
 # checkout your resume `my_resume_2023.pdf` with a pdf viewer
 ```
 
