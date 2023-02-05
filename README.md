@@ -72,7 +72,7 @@ You can create your `html` resume template and use that template to generate you
 
 ## Contribution
 
-Contributions are welcome especially the new [templates](./src/assets/templates)
+Contributions are welcome especially new [templates](./src/assets/templates)
 
 ### Building
 ```sh
