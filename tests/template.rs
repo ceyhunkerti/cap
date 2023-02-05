@@ -22,9 +22,11 @@ Options:
   -h, --help             Print help
 ";
 
-const LIST_STR: &str = "+-------+
-| basic |
-+-------+
+const LIST_STR: &str = "+-----------+
+| basic     |
++-----------+
+| basicplus |
++-----------+
 ";
 
 #[test]
